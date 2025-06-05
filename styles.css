@@ -1,13 +1,14 @@
 /* --- Variabel CSS Global --- */
 :root {
+    /* Mengembalikan ke warna yang lebih netral/default biru */
     --primary-color: #007bff; /* Biru cerah */
     --dark-primary-color: #0056b3; /* Biru tua untuk hover */
-    --secondary-color: #28a745; /* Hijau untuk kategori/success */
+    --secondary-color: #6c757d; /* Abu-abu untuk kategori/info */
     --text-color: #333;
     --heading-color: #222;
     --light-bg: #f8f9fa;
     --border-color: #dee2e6;
-    --accent-color: #ffc107; /* Kuning untuk aksen */
+    --accent-color: #ffc107; /* Kuning untuk aksen (misal: cart count) */
 }
 
 /* --- Reset & Base Styling --- */
@@ -140,6 +141,7 @@ nav ul li a.active::after {
 
 /* --- Hero Section --- */
 .hero {
+    /* Placeholder untuk background image */
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://via.placeholder.com/1500x500?text=Background+Image') no-repeat center center/cover;
     color: white;
     text-align: center;
@@ -274,7 +276,7 @@ nav ul li a.active::after {
 .product-image {
     width: 100%;
     height: 180px; /* Tinggi gambar/ikon */
-    background-color: #5cb85c; /* Warna default, akan diganti oleh JS jika ada */
+    background-color: #e9ecef; /* Warna background netral untuk area gambar */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -282,18 +284,19 @@ nav ul li a.active::after {
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
     overflow: hidden; /* Pastikan gambar tidak keluar dari border-radius */
+    border-bottom: 1px solid #e0e0e0; /* Garis bawah untuk pemisah */
 }
 
 .product-image img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 90%; /* Kurangi sedikit agar tidak terlalu mepet */
+    max-height: 90%; /* Kurangi sedikit agar tidak terlalu mepet */
     object-fit: contain; /* Agar gambar tidak terdistorsi */
     display: block; /* Menghilangkan spasi ekstra di bawah gambar */
 }
 
 .product-image i.fas {
     font-size: 60px; /* Ukuran ikon */
-    color: white; /* Warna ikon */
+    color: #bdbdbd; /* Warna ikon placeholder yang lebih netral */
 }
 
 .product-category {
@@ -546,7 +549,7 @@ footer {
 }
 
 .btn-checkout {
-    background-color: var(--secondary-color); /* Hijau untuk checkout */
+    background-color: var(--primary-color); /* Ubah ke primary color, atau biarkan hijau jika suka */
     color: white;
     padding: 15px 25px;
     border: none;
@@ -560,7 +563,7 @@ footer {
 }
 
 .btn-checkout:hover {
-    background-color: #218838;
+    background-color: var(--dark-primary-color); /* Sesuaikan hover */
     transform: translateY(-2px);
 }
 
