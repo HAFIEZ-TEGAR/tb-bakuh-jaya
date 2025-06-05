@@ -638,10 +638,14 @@ body > main {
     border-bottom: 1px solid #eee;
 }
 
+/* --- Checkout Pop-up Styling (Revisi untuk Metode Pembayaran) --- */
+
+/* ... (Kode CSS sebelumnya di bagian popup-overlay dan popup-content tidak berubah) ... */
+
 .payment-methods {
     display: flex;
-    flex-direction: column;
-    gap: 15px; /* Tingkatkan jarak antar opsi pembayaran */
+    flex-direction: column; /* Tetap kolom agar setiap opsi di baris baru */
+    gap: 15px; /* Jarak antar opsi pembayaran */
     margin-top: 15px;
     margin-bottom: 25px; /* Beri sedikit ruang lebih di bawah metode pembayaran */
 }
@@ -657,6 +661,10 @@ body > main {
     border-radius: 8px; /* Sudut membulat */
     background-color: var(--light-bg); /* Warna latar belakang yang sedikit berbeda */
     transition: background-color 0.2s ease, border-color 0.2s ease;
+    /* Tambahan penting untuk mengatasi isu lebar dan mepet */
+    justify-content: flex-start; /* Posisikan item ke kiri */
+    width: auto; /* Biarkan lebarnya menyesuaikan konten */
+    max-width: 100%; /* Pastikan tidak melebihi lebar induk */
 }
 
 .payment-methods label:hover {
@@ -669,12 +677,32 @@ body > main {
     transform: scale(1.3); /* Biarkan ukuran radio button sedikit lebih besar */
     accent-color: var(--primary-color); /* Warna radio button sesuai tema */
     flex-shrink: 0; /* Pastikan radio button tidak menyusut */
+    /* Pastikan radio button memiliki lebar yang konsisten jika perlu */
+    width: 20px; /* Contoh: atur lebar tetap untuk radio button */
+    height: 20px; /* Contoh: atur tinggi tetap untuk radio button */
 }
 
 /* Optional: Styling untuk teks radio button yang terpilih */
 .payment-methods input[type="radio"]:checked + span {
     font-weight: bold;
     color: var(--primary-color);
+}
+
+/* ... (Kode CSS lainnya di bagian popup-content, form-group, popup-order-summary, dll. tidak berubah) ... */
+
+/* Media Queries - Pastikan adaptasi di mobile */
+@media (max-width: 992px) {
+    .payment-methods {
+        gap: 10px; /* Sedikit kurangi gap di mobile */
+        margin-bottom: 20px;
+    }
+    .payment-methods label {
+        padding: 8px 12px; /* Sesuaikan padding di mobile */
+        font-size: 1em;
+    }
+    .payment-methods input[type="radio"] {
+        margin-right: 10px; /* Sesuaikan margin di mobile */
+    }
 }
 
 .popup-order-summary {
