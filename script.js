@@ -15,7 +15,7 @@ try {
         cart = JSON.parse(storedCart);
     }
 
-    // Memastikan hasil parse adalah array
+    // Memastikan hasil parse adalah array. Jika tidak, inisialisasi ulang.
     if (!Array.isArray(cart)) {
         cart = [];
         console.warn("Keranjang dari localStorage bukan array atau tidak valid, menginisialisasi ulang.");
@@ -83,11 +83,12 @@ function renderProducts(productsToRender) {
 
     productsToRender.forEach(product => {
         // --- Sesuaikan nama properti dengan header Google Sheet Anda ---
-        const productId = product.ID_Produk_Internal;
+        // Referensi Google Sheet Anda menunjukkan header: Product Name, Price, Stock, Satuan Unit, Image URL, SKU, Description
+        const productId = product.ID_Produk_Internal; // Ini dari script Apps Script Anda
         const productName = product['Product Name'];
         const price = parseFloat(product['Price']);
         const category = product['Satuan Unit'] || 'Umum';
-        const imageUrl = product['Image URL'] || '';
+        const imageUrl = product['Image URL'] || ''; // Mengambil Image URL
         const stock = product['Stock'];
         const description = product['Description'] || '';
 
@@ -109,12 +110,15 @@ function renderProducts(productsToRender) {
         productCard.setAttribute('data-price', price);
         productCard.setAttribute('data-category', category);
 
-        // Tambahkan event listener untuk error gambar
-        const imageElement = imageUrl ? `<img src="${imageUrl}" alt="${productName}" onerror="this.onerror=null;this.src='https://via.placeholder.com/150x150?text=No+Image';this.classList.add('placeholder-img');"/>` : `<i class="fas fa-box" style="font-size: 60px; color: #bdbdbd;"></i>`;
+        // Penanganan gambar: jika ada URL, coba muat. Jika tidak atau gagal, gunakan ikon placeholder.
+        const imageHtml = imageUrl ?
+            `<img src="${imageUrl}" alt="${productName}" onerror="this.onerror=null;this.src='https://via.placeholder.com/150x150?text=No+Image';this.classList.add('placeholder-img');"/>` :
+            `<i class="fas fa-box" style="font-size: 60px; color: #bdbdbd;"></i>`;
+
 
         productCard.innerHTML = `
             <div class="product-image">
-                ${imageElement}
+                ${imageHtml}
                 <span class="product-category">${category}</span>
             </div>
             <h3>${productName}</h3>
@@ -285,7 +289,7 @@ checkoutForm.addEventListener('submit', function(event) {
     orderSummary += `\n\nTerima kasih!`;
 
     // Nomor WhatsApp tujuan
-    const whatsappNumber = '6281234567890'; // Ganti dengan nomor WhatsApp Anda
+    const whatsappNumber = '682113804174'; // Ganti dengan nomor WhatsApp Anda
 
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(orderSummary)}`;
     window.open(whatsappUrl, '_blank');
