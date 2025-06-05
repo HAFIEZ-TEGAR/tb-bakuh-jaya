@@ -1,8 +1,23 @@
 // script.js
 
 // --- Konfigurasi Awal ---
-const PRODUCTS_API_URL = 'https://script.google.com/macros/s/AKfycbz0tQtwkME3kYQ8f9fSlIs4A1oC95TOsYP4Mz3c87APU_sWflvMWLgDwioWlSMiBTtrqQ/exec'; // <<< GANTI DENGAN URL WEB APP ANDA DI SINI
-let cart = JSON.parse(localStorage.getItem('cart')) || []; // Muat keranjang dari localStorage
+// >>> PENTING: GANTI URL DI BAWAH INI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA <<<
+const PRODUCTS_API_URL = 'https://script.google.com/macros/s/AKfycbz0tQtwkME3kYQ8f9fSlIs4A1oC95TOsYP4Mz3c87APU_sWflvMWLgDwioWlSMiBTtrqQ/exec'; //
+// <<< JANGAN LUPA GANTI! >>>
+
+let cart;
+try {
+    const storedCart = localStorage.getItem('cart');
+    cart = storedCart ? JSON.parse(storedCart) : [];
+    if (!Array.isArray(cart)) {
+        cart = [];
+        console.warn("Keranjang dari localStorage bukan array atau tidak valid, menginisialisasi ulang.");
+    }
+} catch (e) {
+    console.error("Gagal mem-parse keranjang dari localStorage:", e);
+    cart = []; // Inisialisasi ulang jika ada error parsing
+}
+
 const shoppingCartSidebar = document.getElementById('shopping-cart-sidebar');
 const checkoutPopup = document.getElementById('checkout-popup-overlay');
 const checkoutForm = document.getElementById('checkout-form');
@@ -213,7 +228,7 @@ function openCheckoutPopup() {
     }
     const popupCartItems = document.getElementById('popup-cart-items');
     const popupCartTotalPrice = document.getElementById('popup-cart-total-price');
-    
+
     popupCartItems.innerHTML = '';
     let total = 0;
 
@@ -244,7 +259,7 @@ checkoutForm.addEventListener('submit', function(event) {
     const customerAddress = document.getElementById('customer-address').value;
     const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
 
-    let orderSummary = `Halo, saya ingin memesan produk-produk berikut:\n\n`;
+    let orderSummary = `Halo Admin Bakuh, saya ingin memesan produk-produk berikut:\n\n`;
     let totalOrderPrice = 0;
 
     cart.forEach(item => {
@@ -259,7 +274,7 @@ checkoutForm.addEventListener('submit', function(event) {
     orderSummary += `\n\nTerima kasih!`;
 
     // Nomor WhatsApp tujuan
-    const whatsappNumber = '6282113804174'; // Ganti dengan nomor WhatsApp Anda
+    const whatsappNumber = '082113804174'; // Ganti dengan nomor WhatsApp Anda
 
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(orderSummary)}`;
     window.open(whatsappUrl, '_blank');
