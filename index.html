@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TB. BAKUH JAYA & MR. RENOV</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="images/bakuh jaya logo.png" alt="logo">
+                <h1>TB. BAKUH JAYA & MR. RENOV</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#produk" class="active">Produk</a></li>
+                    <li><a href="#tentang-kami">Tentang Kami</a></li>
+                    <li><a href="#kontak">Kontak</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="produk" class="featured-products">
+            <h2>Produk Unggulan Kami</h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Cari produk..." onkeyup="searchProducts()">
+                <button onclick="searchProducts()">Cari</button>
+            </div>
+            <div class="product-list">
+                <div class="product-card" data-product-id="semen-tiga-roda" data-product-name="Semen Tiga Roda" data-price="65000" data-category="Semen">
+                    <div class="product-image" style="background-color: #5cb85c;">
+                        <i class="fas fa-box" style="font-size: 50px; color: white;"></i>
+                        <span class="product-category">Semen</span>
+                    </div>
+                    <h3>Semen Tiga Roda</h3>
+                    <p class="product-price">Rp65.000</p>
+                    <button class="add-to-cart" onclick="addToCart('semen-tiga-roda', 'Semen Tiga Roda', 65000)">
+                        <i class="fas fa-shopping-cart"></i> Tambah ke Keranjang
+                    </button>
+                </div>
+
+                <div class="product-card" data-product-id="cat-dulux-sl" data-product-name="Cat Dulux SL" data-price="25000" data-category="Cat">
+                    <div class="product-image" style="background-color: #4CAF50;">
+                        <i class="fas fa-fill-drip" style="font-size: 50px; color: white;"></i>
+                        <span class="product-category">Cat</span>
+                    </div>
+                    <h3>Cat Dulux SL</h3>
+                    <p class="product-price">Rp25.000</p>
+                    <button class="add-to-cart" onclick="addToCart('cat-dulux-sl', 'Cat Dulux SL', 25000)">
+                        <i class="fas fa-shopping-cart"></i> Tambah ke Keranjang
+                    </button>
+                </div>
+                </div>
+        </section>
+
+        <section id="tentang-kami" class="about-us">
+            <h2>Tentang Kami</h2>
+            <p>
+                TB. BAKUH JAYA & MR. RENOV hadir untuk menjadi solusi terdepan dalam pengadaan bahan
+                bangunan berkualitas tinggi di Indonesia. Kami menyediakan beragam material konstruksi mulai dari
+                semen, bata, cat, hingga perkakas, semua dikurasi untuk memastikan kualitas terbaik dan daya tahan.
+            </p>
+            <p>
+                Didukung oleh tim profesional dan sistem logistik yang efisien, kami berkomitmen untuk
+                memberikan pengalaman berbelanja yang mudah, cepat, dan terpercaya. Kepuasan pelanggan
+                adalah prioritas utama kami, dengan harga yang kompetitif dan pelayanan prima. Bangun impian
+                Anda bersama kami!
+            </p>
+        </section>
+
+        <section id="kontak" class="contact-us">
+            <h2>Kontak Kami</h2>
+            <div class="contact-info">
+                <p><i class="fas fa-map-marker-alt"></i> Alamat: Jl. Contoh Alamat No. 123, Kota Anda, Kode Pos 12345</p>
+                <p><i class="fas fa-phone"></i> Telepon: (021) 1234-5678</p>
+                <p><i class="fas fa-whatsapp"></i> WhatsApp: <a href="https://wa.me/6281234567890" target="_blank">+62 812 3456 7890</a></p>
+                <p><i class="fas fa-envelope"></i> Email: <a href="mailto:info@bakuhjayarenov.com">info@bakuhjayarenov.com</a></p>
+            </div>
+        </section>
+    </main>
+
+    <aside class="shopping-cart-sidebar">
+        <h3>
+            <i class="fas fa-shopping-cart"></i> Keranjang Belanja Anda
+        </h3>
+        <div id="cart-items">
+            </div>
+        <div class="cart-summary">
+            <div class="cart-total">
+                Total: <span id="cart-total-price">Rp0</span>
+            </div>
+            <button class="whatsapp-button" onclick="openCheckoutPopup()">
+                <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
+            </button>
+        </div>
+    </aside>
+
+    <div id="checkout-popup" class="popup-overlay">
+        <div class="popup-content">
+            <span class="close-button" onclick="closeCheckoutPopup()">&times;</span>
+            <h2>Konfirmasi Pesanan</h2>
+            <form id="checkout-form">
+                <div class="form-group">
+                    <label for="customer-name">Nama Lengkap:</label>
+                    <input type="text" id="customer-name" name="customer-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="customer-address">Alamat Pengiriman:</label>
+                    <textarea id="customer-address" name="customer-address" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Metode Pembayaran:</label>
+                    <div class="payment-methods">
+                        <label>
+                            <input type="radio" name="payment-method" value="Transfer Bank" checked>
+                            <span>Transfer Bank</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="payment-method" value="COD (Cash On Delivery)">
+                            <span>COD (Bayar di Tempat)</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="popup-order-summary">
+                    <h4>Ringkasan Pesanan Anda:</h4>
+                    <ul id="popup-cart-list">
+                        </ul>
+                    <p>Total Akhir: <span id="popup-total-price">Rp0</span></p>
+                </div>
+                <button type="submit" class="confirm-order-button">Konfirmasi Pesanan</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
