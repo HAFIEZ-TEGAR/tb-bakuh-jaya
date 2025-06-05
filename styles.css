@@ -294,10 +294,18 @@ nav ul li a.active::after {
     display: block; /* Menghilangkan spasi ekstra di bawah gambar */
 }
 
+/* Style untuk ikon placeholder jika gambar gagal/tidak ada */
 .product-image i.fas {
     font-size: 60px; /* Ukuran ikon */
     color: #bdbdbd; /* Warna ikon placeholder yang lebih netral */
 }
+
+/* Style jika gambar diganti oleh placeholder */
+.product-image img.placeholder-img {
+    filter: grayscale(100%); /* Efek grayscale untuk placeholder */
+    opacity: 0.7;
+}
+
 
 .product-category {
     position: absolute;
