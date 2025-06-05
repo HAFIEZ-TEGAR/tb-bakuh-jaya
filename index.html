@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,15 +9,14 @@
 </head>
 <body>
     <header>
-        <div class="container">
+        <div class="container header-content">
             <div class="logo">
-                <img src="bakuh jaya logo.png" alt="Company Logo">
+                <img src="bakuh jaya logo.png" alt="bakuh">
                 <h1>TB. BAKUH JAYA & MR. RENOV</h1>
             </div>
             <nav>
                 <ul>
-                    <li><a href="#hero">Beranda</a></li>
-                    <li><a href="#produk">Produk</a></li>
+                    <li><a href="#produk" class="active">Produk</a></li>
                     <li><a href="#tentang-kami">Tentang Kami</a></li>
                     <li><a href="#kontak">Kontak</a></li>
                 </ul>
@@ -25,77 +24,64 @@
         </div>
     </header>
 
-    <main>
-        <section id="hero" class="hero">
-            <div class="container">
-                <h1>Selamat Datang di TB. BAKUH JAYA & MR. RENOV</h1>
-                <p>Solusi lengkap kebutuhan bangunan Anda.</p>
-                <a href="#produk"</a>
-            </div>
-        </section>
-
+    <main class="container">
         <section id="produk" class="featured-products">
-            <h2>Produk Unggulan Kami</h2>
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Cari produk..." onkeyup="searchProducts()">
-                <button onclick="searchProducts()">Cari</button>
-            </div>
-            <div class="product-list">
-                <p id="loading-products" style="text-align: center; color: #888;">Memuat produk...</p>
-            </div>
+    <h2>Produk Unggulan Kami</h2>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Cari produk..." onkeyup="searchProducts()">
+        <button onclick="searchProducts()">Cari</button>
+    </div>
+    <div class="product-list">
+        <p id="loading-products" style="text-align: center; color: #888;">Memuat produk...</p>
+    </div>
+</section>
+                </div>
         </section>
 
         <section id="tentang-kami" class="about-us">
-            <div class="container">
-                <h2>Tentang Kami</h2>
-                <p>TB. BAKUH JAYA & MR. RENOV hadir untuk menjadi solusi terdepan dalam pengadaan bahan bangunan berkualitas tinggi di Indonesia. Kami menyediakan beragam material konstruksi mulai dari semen, bata, cat, hingga perkakas, semua dikurasi untuk memastikan kualitas terbaik dan daya tahan.</p>
-                <p>Didukung oleh tim profesional dan sistem logistik yang efisien, kami berkomitmen untuk memberikan pengalaman berbelanja yang mudah, cepat, dan terpercaya. Kepuasan pelanggan adalah prioritas utama kami, dengan harga yang kompetitif dan pelayanan prima. Bangun impian Anda bersama kami!</p>
-            </div>
+            <h2>Tentang Kami</h2>
+            <p>
+                TB. BAKUH JAYA & MR. RENOV hadir untuk menjadi solusi terdepan dalam pengadaan bahan
+                bangunan berkualitas tinggi di Indonesia. Kami menyediakan beragam material konstruksi mulai dari
+                semen, bata, cat, hingga perkakas, semua dikurasi untuk memastikan kualitas terbaik dan daya tahan.
+            </p>
+            <p>
+                Didukung oleh tim profesional dan sistem logistik yang efisien, kami berkomitmen untuk
+                memberikan pengalaman berbelanja yang mudah, cepat, dan terpercaya. Kepuasan pelanggan
+                adalah prioritas utama kami, dengan harga yang kompetitif dan pelayanan prima. Bangun impian
+                Anda bersama kami!
+            </p>
         </section>
 
-        <section id="kontak" class="contact">
-            <div class="container">
-                <h2>Kontak Kami</h2>
+        <section id="kontak" class="contact-us">
+            <h2>Kontak Kami</h2>
+            <div class="contact-info">
                 <p><i class="fas fa-map-marker-alt"></i> Jl. Gg. Sirin No.41A, Sukamaju Baru, Kec. Tapos, Kota Depok, Jawa Barat 16455, Indonesia</p>
-                <p><i class="fas fa-phone"></i> Telepon: 082113804174</p>
-                <p><i class="fas fa-envelope"></i> Email: hubungimr.renov@gmail.com</p>
-                <div class="social-media">
-                    <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                </div>
-            </div>
+                <p><i class="fas fa-whatsapp"></i> WhatsApp: <a href="https://wa.me/6282113804174" target="_blank">682113804174</a></p>
+                <p><i class="fas fa-envelope"></i> Email: <a href="mailto:hubungimr.renov@gmail.com">hubungimr.renov@gmail.com</a></p>
         </section>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 TB. BAKUH JAYA & MR. RENOV. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <div id="shopping-cart-sidebar" class="shopping-cart-sidebar">
-        <div class="sidebar-header">
-            <h3>Keranjang Belanja Anda</h3>
-            <button class="close-sidebar-btn" onclick="hideCart()">&times;</button>
-        </div>
-        <div id="cart-items" class="cart-items">
-            <p class="empty-cart-message">Keranjang kosong.</p>
-        </div>
-        <div class="sidebar-footer">
-            <div class="total-price">
+    <aside class="shopping-cart-sidebar">
+        <h3>
+            <i class="fas fa-shopping-cart"></i> Keranjang Belanja Anda
+        </h3>
+        <div id="cart-items">
+            </div>
+        <div class="cart-summary">
+            <div class="cart-total">
                 Total: <span id="cart-total-price">Rp0</span>
             </div>
-            <button class="btn-checkout" onclick="openCheckoutPopup()">Pesan via WhatsApp</button>
+            <button class="whatsapp-button" onclick="openCheckoutPopup()">
+                <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
+            </button>
         </div>
-    </div>
+    </aside>
 
-    <div id="checkout-popup-overlay" class="popup-overlay" onclick="closeCheckoutPopup()">
-        <div id="checkout-popup-content" class="popup-content" onclick="event.stopPropagation()">
-            <div class="popup-header">
-                <h2>Konfirmasi Pesanan</h2>
-                <button class="close-popup-btn" onclick="closeCheckoutPopup()">&times;</button>
-            </div>
+    <div id="checkout-popup" class="popup-overlay">
+        <div class="popup-content">
+            <span class="close-button" onclick="closeCheckoutPopup()">&times;</span>
+            <h2>Konfirmasi Pesanan</h2>
             <form id="checkout-form">
                 <div class="form-group">
                     <label for="customer-name">Nama Lengkap:</label>
@@ -113,20 +99,18 @@
                             <span>Transfer Bank</span>
                         </label>
                         <label>
-                            <input type="radio" name="payment-method" value="COD">
+                            <input type="radio" name="payment-method" value="COD (Cash On Delivery)">
                             <span>COD (Bayar di Tempat)</span>
                         </label>
                     </div>
                 </div>
                 <div class="popup-order-summary">
-                    <h3>Ringkasan Pesanan Anda:</h3>
-                    <div id="popup-cart-items">
-                        </div>
-                    <div class="popup-total-price">
-                        Total Akhir: <span id="popup-cart-total-price">Rp0</span>
-                    </div>
+                    <h4>Ringkasan Pesanan Anda:</h4>
+                    <ul id="popup-cart-list">
+                        </ul>
+                    <p>Total Akhir: <span id="popup-total-price">Rp0</span></p>
                 </div>
-                <button type="submit" class="btn-confirm-order">Konfirmasi Pesanan</button>
+                <button type="submit" class="confirm-order-button">Konfirmasi Pesanan</button>
             </form>
         </div>
     </div>
