@@ -2,13 +2,20 @@
 
 // --- Konfigurasi Awal ---
 // >>> PENTING: GANTI URL DI BAWAH INI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA <<<
-const PRODUCTS_API_URL = 'https://script.google.com/macros/s/AKfycbz0tQtwkME3kYQ8f9fSlIs4A1oC95TOsYP4Mz3c87APU_sWflvMWLgDwioWlSMiBTtrqQ/exec'; //
+const PRODUCTS_API_URL = 'https://script.google.com/macros/s/AKfycbz0tQtwkME3kYQ8f9fSlIs4A1oC95TOsYP4Mz3c87APU_sWflvMWLgDwioWlSMiBTtrqQ/exec';
 // <<< JANGAN LUPA GANTI! >>>
 
 let cart;
 try {
     const storedCart = localStorage.getItem('cart');
-    cart = storedCart ? JSON.parse(storedCart) : [];
+    // Memastikan jika storedCart adalah string "null" atau "undefined", itu diinterpretasikan sebagai null JavaScript
+    if (storedCart === "null" || storedCart === "undefined" || !storedCart) {
+        cart = [];
+    } else {
+        cart = JSON.parse(storedCart);
+    }
+
+    // Memastikan hasil parse adalah array
     if (!Array.isArray(cart)) {
         cart = [];
         console.warn("Keranjang dari localStorage bukan array atau tidak valid, menginisialisasi ulang.");
@@ -27,6 +34,9 @@ let allProducts = [];
 
 // --- Fungsi Utilitas ---
 function formatRupiah(angka) {
+    if (isNaN(angka) || angka === null) {
+        return 'Rp 0';
+    }
     let reverse = angka.toString().split('').reverse().join('');
     let ribuan = reverse.match(/\d{1,3}/g);
     let hasil = ribuan.join('.').split('').reverse().join('');
@@ -52,7 +62,7 @@ async function fetchProducts() {
         console.error('Error fetching products:', error);
         const productListContainer = document.querySelector('.product-list');
         if (productListContainer) {
-            productListContainer.innerHTML = '<p style="text-align: center; color: red;">Gagal memuat produk. Silakan coba lagi nanti.</p>';
+            productListContainer.innerHTML = '<p style="text-align: center; color: red;">Gagal memuat produk. Silakan periksa URL Web App Anda atau coba lagi nanti.</p>';
         }
     } finally {
         const loadingMessage = document.getElementById('loading-products');
@@ -73,18 +83,13 @@ function renderProducts(productsToRender) {
 
     productsToRender.forEach(product => {
         // --- Sesuaikan nama properti dengan header Google Sheet Anda ---
-        const productId = product.ID_Produk_Internal; // ID Internal dari Apps Script
-        const productName = product['Product Name']; // Nama Produk dari Sheet
-        const price = parseFloat(product['Price']); // Harga dari Sheet, pastikan jadi angka
-        const category = product['Satuan Unit'] || 'Umum'; // Contoh: pakai Satuan Unit sebagai Kategori
-        const imageUrl = product['Image URL'] || ''; // URL Gambar dari Sheet
-        const stock = product['Stock']; // Stok dari Sheet
-        const description = product['Description'] || ''; // Deskripsi dari Sheet
-
-        // Default warna dan ikon jika tidak ada kolom di sheet Anda
-        // Jika Anda menambahkan kolom 'Warna_Card' dan 'Ikon_FontAwesome' di sheet, Anda bisa ambil dari product.Warna_Card dan product.Ikon_FontAwesome
-        const cardColor = '#f0f0f0';
-        const iconClass = 'fa-box';
+        const productId = product.ID_Produk_Internal;
+        const productName = product['Product Name'];
+        const price = parseFloat(product['Price']);
+        const category = product['Satuan Unit'] || 'Umum';
+        const imageUrl = product['Image URL'] || '';
+        const stock = product['Stock'];
+        const description = product['Description'] || '';
 
         // Lewati produk jika Product Name atau Price tidak valid
         if (!productName || isNaN(price)) {
@@ -93,9 +98,7 @@ function renderProducts(productsToRender) {
         }
 
         // Filter produk yang tidak ingin ditampilkan (jika ada kolom 'Tampil' di sheet dengan nilai 'FALSE')
-        // Saat ini, Apps Script menyetel `product.Tampil = true;` secara default.
-        // Jika Anda ingin mengontrol dari sheet, ubah di Apps Script dan pastikan nilai di sheet adalah string 'FALSE'.
-        if (product.Tampil === false || product.Tampil === 'FALSE') {
+        if (product.Tampil === false || String(product.Tampil).toUpperCase() === 'FALSE') { // String(product.Tampil).toUpperCase() untuk handle "FALSE" string
             return;
         }
 
@@ -106,15 +109,18 @@ function renderProducts(productsToRender) {
         productCard.setAttribute('data-price', price);
         productCard.setAttribute('data-category', category);
 
+        // Tambahkan event listener untuk error gambar
+        const imageElement = imageUrl ? `<img src="${imageUrl}" alt="${productName}" onerror="this.onerror=null;this.src='https://via.placeholder.com/150x150?text=No+Image';this.classList.add('placeholder-img');"/>` : `<i class="fas fa-box" style="font-size: 60px; color: #bdbdbd;"></i>`;
+
         productCard.innerHTML = `
-            <div class="product-image" style="background-color: ${cardColor};">
-                ${imageUrl ? `<img src="${imageUrl}" alt="${productName}" />` : `<i class="fas ${iconClass}" style="font-size: 50px; color: white;"></i>`}
+            <div class="product-image">
+                ${imageElement}
                 <span class="product-category">${category}</span>
             </div>
             <h3>${productName}</h3>
             <p class="product-price">${formatRupiah(price)}</p>
-            <p class="product-stock">Stok: ${stock || 'Tidak Tersedia'}</p>
-            <p class="product-description" style="font-size: 0.9em; color: #777; margin-top: 5px;">${description}</p>
+            <p class="product-stock">Stok: ${stock && stock !== '' ? stock : 'Tidak Tersedia'}</p>
+            <p class="product-description">${description}</p>
             <button class="add-to-cart" onclick="addToCart('${productId}', '${productName}', ${price})">
                 <i class="fas fa-shopping-cart"></i> Tambah ke Keranjang
             </button>
@@ -127,10 +133,10 @@ function renderProducts(productsToRender) {
 function searchProducts() {
     const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
     const filteredProducts = allProducts.filter(product => {
-        const productName = (product['Product Name'] || '').toLowerCase(); //
-        const category = (product['Satuan Unit'] || '').toLowerCase(); //
-        const sku = (product['SKU'] || '').toLowerCase(); //
-        const description = (product['Description'] || '').toLowerCase(); //
+        const productName = (product['Product Name'] || '').toLowerCase();
+        const category = (product['Satuan Unit'] || '').toLowerCase();
+        const sku = (product['SKU'] || '').toLowerCase();
+        const description = (product['Description'] || '').toLowerCase();
 
         return productName.includes(searchTerm) ||
                category.includes(searchTerm) ||
@@ -151,12 +157,17 @@ function addToCart(productId, productName, price) {
     }
     localStorage.setItem('cart', JSON.stringify(cart));
     renderCart();
+    showCart(); // Tampilkan keranjang setelah menambahkan produk
 }
 
 function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
     localStorage.setItem('cart', JSON.stringify(cart));
     renderCart();
+    // Opsional: Jika keranjang kosong setelah dihapus, sembunyikan sidebar
+    if (cart.length === 0) {
+        hideCart();
+    }
 }
 
 function updateQuantity(productId, newQuantity) {
@@ -274,7 +285,7 @@ checkoutForm.addEventListener('submit', function(event) {
     orderSummary += `\n\nTerima kasih!`;
 
     // Nomor WhatsApp tujuan
-    const whatsappNumber = '082113804174'; // Ganti dengan nomor WhatsApp Anda
+    const whatsappNumber = '6281234567890'; // Ganti dengan nomor WhatsApp Anda
 
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(orderSummary)}`;
     window.open(whatsappUrl, '_blank');
