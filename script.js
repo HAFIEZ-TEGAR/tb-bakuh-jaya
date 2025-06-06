@@ -31,7 +31,7 @@ const checkoutPopup = document.getElementById('checkout-popup-overlay');
 const checkoutForm = document.getElementById('checkout-form');
 const cartItemsContainer = document.getElementById('cart-items');
 const cartTotalPriceElement = document.getElementById('cart-total-price');
-const cartItemCountElement = document.getElementById('cart-item-count'); // Ini adalah yang perlu kita perhatikan
+// const cartItemCountElement = document.getElementById('cart-item-count'); // TIDAK DIGUNAKAN LAGI KARENA IKON DIHEADER DIHAPUS
 const closeSidebarBtn = document.getElementById('close-sidebar-btn');
 const checkoutBtn = document.getElementById('checkout-btn');
 const whatsappOrderBtn = document.getElementById('whatsapp-order-btn');
@@ -41,6 +41,7 @@ const productListContainer = document.querySelector('.product-list'); // Menggun
 const searchInput = document.getElementById('searchInput');
 const searchButton = document.getElementById('searchButton');
 const loadingMessage = document.getElementById('loading-products'); // ID ini harus ada di HTML Anda
+// const cartIcon = document.getElementById('cart-icon'); // DIHAPUS
 
 // Variabel global untuk menyimpan semua produk yang dimuat dari Google Sheet
 let allProducts = [];
@@ -171,7 +172,7 @@ function addToCart(productId, productName, price) {
     }
     localStorage.setItem('cart', JSON.stringify(cart));
     renderCart();
-    showCart(); // Tampilkan keranjang setelah menambahkan produk
+    showCart(); // Pastikan keranjang muncul saat produk pertama ditambahkan
 }
 
 function removeFromCart(productId) {
@@ -199,24 +200,20 @@ function updateQuantity(productId, newQuantity) {
 
 function renderCart() {
     // Tambahkan pengecekan null sebelum mengakses properti
-    // Ini penting karena Anda menghapus ikon keranjang di header
     if (!cartItemsContainer || !cartTotalPriceElement) {
         console.warn("Elemen keranjang (container atau total price) tidak ditemukan di HTML. Rendering keranjang dibatalkan.");
-        // Kita bisa tetap melanjutkan tanpa mengupdate elemen ini jika mereka tidak ada,
-        // tapi logiknya harus lebih hati-hati. Untuk saat ini, kita return saja.
         return;
     }
 
     cartItemsContainer.innerHTML = '';
     let total = 0;
-    let itemCount = 0;
+    let itemCount = 0; // Tidak lagi digunakan untuk display di header
 
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<p class="empty-cart-message">Keranjang kosong.</p>';
         cartTotalPriceElement.textContent = formatRupiah(0);
-        if (cartItemCountElement) { // Hanya update jika elemen ini ada
-            cartItemCountElement.textContent = '0';
-        }
+        // Sembunyikan sidebar jika keranjang kosong
+        hideCart();
         return;
     }
 
@@ -241,9 +238,8 @@ function renderCart() {
     });
 
     cartTotalPriceElement.textContent = formatRupiah(total);
-    if (cartItemCountElement) { // Hanya update jika elemen ini ada
-        cartItemCountElement.textContent = itemCount.toString();
-    }
+    // Tidak ada lagi `cartItemCountElement.textContent` di sini
+    showCart(); // Pastikan keranjang tetap terbuka jika ada item
 }
 
 function showCart() {
@@ -323,7 +319,8 @@ if (checkoutForm) {
         orderSummary += `\n\nTerima kasih!`;
 
         // Nomor WhatsApp tujuan
-        const whatsappNumber = '6281234567890'; // Ganti dengan nomor WhatsApp Anda
+        const whatsappNumber = '6282113804174'; // Ganti dengan nomor WhatsApp Anda yang benar
+        // const whatsappNumber = '6281234567890'; // Ganti dengan nomor WhatsApp Anda
 
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(orderSummary)}`;
         window.open(whatsappUrl, '_blank');
@@ -331,7 +328,7 @@ if (checkoutForm) {
         // Kosongkan keranjang setelah pesanan dikirim
         cart = [];
         localStorage.setItem('cart', JSON.stringify(cart));
-        renderCart();
+        renderCart(); // Ini akan juga menyembunyikan sidebar karena keranjang kosong
         closeCheckoutPopup();
         alert('Pesanan Anda telah dikirim ke WhatsApp!');
     });
@@ -341,7 +338,7 @@ if (checkoutForm) {
 // --- Inisialisasi Saat Halaman Dimuat ---
 document.addEventListener('DOMContentLoaded', () => {
     // Event listener untuk tombol dan elemen keranjang lainnya
-    // PENTING: Jangan ada event listener untuk cartIcon karena sudah dihapus dari HTML
+    // cartIcon.addEventListener('click', showCart); // DIHAPUS
     if (closeSidebarBtn) {
         closeSidebarBtn.addEventListener('click', hideCart);
     }
@@ -349,7 +346,15 @@ document.addEventListener('DOMContentLoaded', () => {
         checkoutBtn.addEventListener('click', openCheckoutPopup);
     }
     if (whatsappOrderBtn) {
-        whatsappOrderBtn.addEventListener('click', () => { // Jika tombol WhatsApp di sidebar memicu form submit
+        whatsappOrderBtn.addEventListener('click', () => {
+            openCheckoutPopup();
+        });
+    }
+    if (closePopupBtn) {
+        closePopupBtn.addEventListener('click', closeCheckoutPopup);
+    }
+    if (confirmOrderBtn) {
+        confirmOrderBtn.addEventListener('click', () => {
             if (checkoutForm) {
                 checkoutForm.submit();
             } else {
@@ -357,20 +362,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    if (closePopupBtn) {
-        closePopupBtn.addEventListener('click', closeCheckoutPopup);
-    }
-    if (confirmOrderBtn) { // Ini biasanya tombol "Konfirmasi Pesanan" di dalam popup
-        confirmOrderBtn.addEventListener('click', () => {
-            if (checkoutForm) {
-                checkoutForm.submit(); // Menggunakan submit form
-            } else {
-                alert("Elemen form checkout tidak ditemukan.");
-            }
-        });
-    }
 
-    renderCart(); // Render keranjang belanja yang mungkin sudah ada di localStorage
+    renderCart(); // Render keranjang belanja yang mungkin sudah ada di localStorage (ini juga akan show/hide sidebar)
     fetchProducts(); // Panggil fungsi untuk memuat produk dari API
 
     // Event listener untuk search bar
