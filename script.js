@@ -1,49 +1,45 @@
 // script.js
-
 // --- Konfigurasi Awal ---
 // >>> PENTING: GANTI URL DI BAWAH INI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA <<<
-const PRODUCTS_API_URL = 'https://script.google.com/macros/s/AKfycbz0tQtwkME3kYQ8f9fSlIs4A1oC95TOsYP4Mz3c87APU_sWflvMWLgDwioWlSMiBTtrqQ/exec';
+const PRODUCTS_API_URL = 'https://script.google.com/macros/s/AKfycbz0tQtwkME3kYQ8f9fSlIs4A1oC95TOsYP4Mz3c87APU_sWflvMWLgDwioWlSMiBTtrqQ/exec'; // URL ini adalah contoh, pastikan Anda menggantinya
 // <<< JANGAN LUPA GANTI! >>>
 
 let cart;
 try {
     const storedCart = localStorage.getItem('cart');
-    // Memastikan jika storedCart adalah string "null" atau "undefined", itu diinterpretasikan sebagai null JavaScript
     if (storedCart === "null" || storedCart === "undefined" || !storedCart) {
         cart = [];
     } else {
         cart = JSON.parse(storedCart);
     }
 
-    // Memastikan hasil parse adalah array. Jika tidak, inisialisasi ulang.
     if (!Array.isArray(cart)) {
         cart = [];
         console.warn("Keranjang dari localStorage bukan array atau tidak valid, menginisialisasi ulang.");
     }
 } catch (e) {
     console.error("Gagal mem-parse keranjang dari localStorage:", e);
-    cart = []; // Inisialisasi ulang jika ada error parsing
+    cart = [];
 }
 
-// Deklarasi elemen-elemen DOM. Gunakan pengecekan null di tempat penggunaan jika elemen ini opsional di HTML.
+// Deklarasi elemen-elemen DOM.
 const shoppingCartSidebar = document.getElementById('shopping-cart-sidebar');
-const checkoutPopup = document.getElementById('checkout-popup-overlay');
+const checkoutPopup = document.getElementById('checkout-popup-overlay'); // Pastikan ID ini benar
 const checkoutForm = document.getElementById('checkout-form');
 const cartItemsContainer = document.getElementById('cart-items');
 const cartTotalPriceElement = document.getElementById('cart-total-price');
-// const cartItemCountElement = document.getElementById('cart-item-count'); // TIDAK DIGUNAKAN LAGI KARENA IKON DIHEADER DIHAPUS
+// const cartItemCountElement = document.getElementById('cart-item-count'); // HAPUS INI
 const closeSidebarBtn = document.getElementById('close-sidebar-btn');
 const checkoutBtn = document.getElementById('checkout-btn');
 const whatsappOrderBtn = document.getElementById('whatsapp-order-btn');
-const closePopupBtn = document.getElementById('close-checkout-popup');
-const confirmOrderBtn = document.getElementById('confirm-order-btn');
-const productListContainer = document.querySelector('.product-list'); // Menggunakan querySelector untuk class
+const closePopupBtn = document.getElementById('close-checkout-popup'); // Pastikan ID ini benar
+const confirmOrderBtn = document.getElementById('confirm-order-btn'); // Pastikan ID ini benar
+const productListContainer = document.querySelector('.product-list');
 const searchInput = document.getElementById('searchInput');
 const searchButton = document.getElementById('searchButton');
-const loadingMessage = document.getElementById('loading-products'); // ID ini harus ada di HTML Anda
-// const cartIcon = document.getElementById('cart-icon'); // DIHAPUS
+const loadingMessage = document.getElementById('loading-products');
+// const cartIcon = document.getElementById('cart-icon'); // HAPUS INI
 
-// Variabel global untuk menyimpan semua produk yang dimuat dari Google Sheet
 let allProducts = [];
 
 // --- Fungsi Utilitas ---
@@ -59,8 +55,8 @@ function formatRupiah(angka) {
 
 // --- Fungsi untuk Mengambil & Merender Produk dari Google Sheets ---
 async function fetchProducts() {
-    if (loadingMessage) { // Cek apakah elemen loadingMessage ada
-        loadingMessage.style.display = 'block'; // Tampilkan pesan loading
+    if (loadingMessage) {
+        loadingMessage.style.display = 'block';
     }
 
     try {
@@ -69,26 +65,26 @@ async function fetchProducts() {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        allProducts = data; // Simpan semua produk yang dimuat
-        renderProducts(allProducts); // Render semua produk setelah dimuat
+        allProducts = data;
+        renderProducts(allProducts);
     } catch (error) {
         console.error('Error fetching products:', error);
-        if (productListContainer) { // Cek apakah elemen productListContainer ada
+        if (productListContainer) {
             productListContainer.innerHTML = '<p style="text-align: center; color: red;">Gagal memuat produk. Silakan periksa URL Web App Anda, koneksi internet, atau coba lagi nanti.</p>';
         }
     } finally {
-        if (loadingMessage) { // Cek apakah elemen loadingMessage ada
-            loadingMessage.style.display = 'none'; // Sembunyikan pesan loading
+        if (loadingMessage) {
+            loadingMessage.style.display = 'none';
         }
     }
 }
 
 function renderProducts(productsToRender) {
-    if (!productListContainer) { // Penting: Pastikan kontainer produk ada sebelum memanipulasinya
+    if (!productListContainer) {
         console.error("Elemen '.product-list' tidak ditemukan di HTML. Rendering produk dibatalkan.");
         return;
     }
-    productListContainer.innerHTML = ''; // Kosongkan container sebelum merender
+    productListContainer.innerHTML = '';
 
     if (productsToRender.length === 0) {
         productListContainer.innerHTML = '<p style="text-align: center; color: #888;">Tidak ada produk ditemukan.</p>';
@@ -96,17 +92,15 @@ function renderProducts(productsToRender) {
     }
 
     productsToRender.forEach(product => {
-        // --- Sesuaikan nama properti dengan header Google Sheet Anda ---
         const productId = product.ID_Produk_Internal;
         const productName = product['Product Name'];
         const price = parseFloat(product['Price']);
-        const category = product['Satuan Unit'] || 'Umum'; // Jika 'Satuan Unit' juga digunakan sebagai kategori
+        const category = product['Satuan Unit'] || 'Umum';
         const imageUrl = product['Image URL'] || '';
         const stock = product['Stock'];
         const description = product['Description'] || '';
-        const tampil = product['Tampil']; // Ambil nilai 'Tampil'
+        const tampil = product['Tampil'];
 
-        // Lewati produk jika Product Name atau Price tidak valid ATAU jika Tampil adalah FALSE
         if (!productName || isNaN(price) || tampil === false) {
             console.warn('Produk dengan nama, harga tidak valid, atau disembunyikan diabaikan:', product);
             return;
@@ -142,7 +136,7 @@ function renderProducts(productsToRender) {
 
 // --- Fungsi Pencarian Produk ---
 function searchProducts() {
-    if (!searchInput) { // Cek apakah elemen searchInput ada
+    if (!searchInput) {
         console.warn("Elemen 'searchInput' tidak ditemukan.");
         return;
     }
@@ -179,9 +173,8 @@ function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
     localStorage.setItem('cart', JSON.stringify(cart));
     renderCart();
-    // Opsional: Jika keranjang kosong setelah dihapus, sembunyikan sidebar
     if (cart.length === 0) {
-        hideCart();
+        hideCart(); // Sembunyikan sidebar jika keranjang kosong setelah dihapus
     }
 }
 
@@ -199,7 +192,6 @@ function updateQuantity(productId, newQuantity) {
 }
 
 function renderCart() {
-    // Tambahkan pengecekan null sebelum mengakses properti
     if (!cartItemsContainer || !cartTotalPriceElement) {
         console.warn("Elemen keranjang (container atau total price) tidak ditemukan di HTML. Rendering keranjang dibatalkan.");
         return;
@@ -207,20 +199,19 @@ function renderCart() {
 
     cartItemsContainer.innerHTML = '';
     let total = 0;
-    let itemCount = 0; // Tidak lagi digunakan untuk display di header
+    // let itemCount = 0; // Tidak lagi digunakan untuk display di header
 
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<p class="empty-cart-message">Keranjang kosong.</p>';
         cartTotalPriceElement.textContent = formatRupiah(0);
-        // Sembunyikan sidebar jika keranjang kosong
-        hideCart();
+        hideCart(); // Sembunyikan sidebar jika keranjang kosong
         return;
     }
 
     cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
-        itemCount += item.quantity;
+        // itemCount += item.quantity; // Tidak lagi digunakan untuk display di header
 
         const cartItemDiv = document.createElement('div');
         cartItemDiv.classList.add('cart-item');
@@ -238,18 +229,18 @@ function renderCart() {
     });
 
     cartTotalPriceElement.textContent = formatRupiah(total);
-    // Tidak ada lagi `cartItemCountElement.textContent` di sini
+    // if (cartItemCountElement) { cartItemCountElement.textContent = itemCount.toString(); } // HAPUS INI
     showCart(); // Pastikan keranjang tetap terbuka jika ada item
 }
 
 function showCart() {
-    if (shoppingCartSidebar) { // Cek apakah elemen sidebar ada
+    if (shoppingCartSidebar) {
         shoppingCartSidebar.classList.add('open');
     }
 }
 
 function hideCart() {
-    if (shoppingCartSidebar) { // Cek apakah elemen sidebar ada
+    if (shoppingCartSidebar) {
         shoppingCartSidebar.classList.remove('open');
     }
 }
@@ -260,10 +251,9 @@ function openCheckoutPopup() {
         alert('Keranjang Anda kosong. Silakan tambahkan produk terlebih dahulu.');
         return;
     }
-    const popupCartItems = document.getElementById('popup-cart-items');
-    const popupCartTotalPrice = document.getElementById('popup-cart-total-price');
+    const popupCartItems = document.getElementById('popup-cart-items'); // Pastikan ID ini benar
+    const popupCartTotalPrice = document.getElementById('popup-cart-total-price'); // Pastikan ID ini benar
 
-    // Tambahkan pengecekan null untuk elemen popup
     if (!popupCartItems || !popupCartTotalPrice || !checkoutPopup) {
         console.warn("Elemen popup checkout tidak ditemukan di HTML.");
         return;
@@ -285,24 +275,23 @@ function openCheckoutPopup() {
     });
     popupCartTotalPrice.textContent = formatRupiah(total);
     checkoutPopup.classList.add('open');
-    hideCart(); // Sembunyikan sidebar keranjang saat pop-up checkout muncul
+    hideCart();
 }
 
 function closeCheckoutPopup() {
-    if (checkoutPopup) { // Cek apakah elemen popup ada
+    if (checkoutPopup) {
         checkoutPopup.classList.remove('open');
     }
 }
 
-// Pastikan checkoutForm ada sebelum menambahkan event listener
 if (checkoutForm) {
     checkoutForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Mencegah form dari reload halaman
+        event.preventDefault();
 
         const customerName = document.getElementById('customer-name').value;
         const customerAddress = document.getElementById('customer-address').value;
         const paymentMethodElement = document.querySelector('input[name="payment-method"]:checked');
-        const paymentMethod = paymentMethodElement ? paymentMethodElement.value : 'Tidak dipilih'; // Penanganan jika tidak ada yang dipilih
+        const paymentMethod = paymentMethodElement ? paymentMethodElement.value : 'Tidak dipilih';
 
         let orderSummary = `Halo Admin Bakuh, saya ingin memesan produk-produk berikut:\n\n`;
         let totalOrderPrice = 0;
@@ -320,25 +309,22 @@ if (checkoutForm) {
 
         // Nomor WhatsApp tujuan
         const whatsappNumber = '6282113804174'; // Ganti dengan nomor WhatsApp Anda yang benar
-        // const whatsappNumber = '6281234567890'; // Ganti dengan nomor WhatsApp Anda
 
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(orderSummary)}`;
         window.open(whatsappUrl, '_blank');
 
-        // Kosongkan keranjang setelah pesanan dikirim
         cart = [];
         localStorage.setItem('cart', JSON.stringify(cart));
-        renderCart(); // Ini akan juga menyembunyikan sidebar karena keranjang kosong
+        renderCart();
         closeCheckoutPopup();
         alert('Pesanan Anda telah dikirim ke WhatsApp!');
     });
 }
 
-
 // --- Inisialisasi Saat Halaman Dimuat ---
 document.addEventListener('DOMContentLoaded', () => {
     // Event listener untuk tombol dan elemen keranjang lainnya
-    // cartIcon.addEventListener('click', showCart); // DIHAPUS
+    // cartIcon.addEventListener('click', showCart); // HAPUS INI
     if (closeSidebarBtn) {
         closeSidebarBtn.addEventListener('click', hideCart);
     }
@@ -347,6 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (whatsappOrderBtn) {
         whatsappOrderBtn.addEventListener('click', () => {
+             // Langsung buka checkout popup, lalu form akan handle pengiriman WA
             openCheckoutPopup();
         });
     }
@@ -363,14 +350,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    renderCart(); // Render keranjang belanja yang mungkin sudah ada di localStorage (ini juga akan show/hide sidebar)
-    fetchProducts(); // Panggil fungsi untuk memuat produk dari API
+    renderCart(); // Panggil renderCart untuk memastikan sidebar tersembunyi jika keranjang kosong saat dimuat
+    fetchProducts();
 
-    // Event listener untuk search bar
-    if (searchButton) { // Cek apakah elemen searchButton ada
+    if (searchButton) {
         searchButton.addEventListener('click', searchProducts);
     }
-    if (searchInput) { // Cek apakah elemen searchInput ada
+    if (searchInput) {
         searchInput.addEventListener('keyup', (event) => {
             if (event.key === 'Enter') {
                 searchProducts();
