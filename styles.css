@@ -26,10 +26,9 @@ body {
 }
 
 .container {
-    /* Ini adalah kunci untuk memusatkan konten */
     max-width: 1200px;
-    margin: 0 auto; /* Memusatkan kontainer secara horizontal */
-    padding: 0 20px; /* Padding samping agar konten tidak menempel di tepi */
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 a {
@@ -45,7 +44,7 @@ a:hover {
 img {
     max-width: 100%;
     height: auto;
-    display: block; /* Menghilangkan spasi ekstra di bawah gambar */
+    display: block;
 }
 
 /* --- Header Styling --- */
@@ -62,8 +61,8 @@ header {
 
 header .container {
     display: flex;
-    justify-content: space-between; /* Menyebar elemen logo dan nav */
-    align-items: center; /* Menyelaraskan secara vertikal di tengah */
+    justify-content: space-between;
+    align-items: center;
 }
 
 .logo {
@@ -74,15 +73,15 @@ header .container {
 
 .logo img {
     border-radius: 50%;
-    width: 50px; /* Atur ukuran logo */
+    width: 50px;
     height: 50px;
-    object-fit: cover; /* Pastikan gambar logo terpotong dengan baik */
+    object-fit: cover;
 }
 
 .logo h1 {
     font-size: 1.8em;
     color: var(--heading-color);
-    white-space: nowrap; /* Mencegah judul pecah baris terlalu cepat */
+    white-space: nowrap;
 }
 
 nav ul {
@@ -118,47 +117,21 @@ nav ul li a.active::after {
     width: 100%;
 }
 
-/* Cart Icon - styling ini dihapus karena ikon tidak ada di header lagi
-.cart-icon {
-    position: relative;
-    cursor: pointer;
-    font-size: 1.8em;
-    color: var(--primary-color);
-    margin-left: 20px;
-}
-
-.cart-icon .cart-item-count {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background-color: var(--accent-color);
-    color: white;
-    font-size: 0.7em;
-    padding: 3px 7px;
-    border-radius: 50%;
-    font-weight: bold;
-    transform: scale(0.9);
-    transform-origin: top right;
-    transition: transform 0.2s ease;
-}
-
-.cart-icon:hover .cart-item-count {
-    transform: scale(1.1);
-}
-*/
+/* Cart Icon - Styling ini sudah tidak relevan karena ikon dihapus dari HTML header */
+/* .cart-icon { display: none; } */
+/* .cart-icon .cart-item-count { display: none; } */
 
 /* --- Hero Section --- */
 .hero {
-    /* Memusatkan konten di tengah hero section */
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://via.placeholder.com/1500x500?text=Background+Image') no-repeat center center/cover;
     color: white;
     text-align: center;
     padding: 100px 20px;
     height: 500px;
     display: flex;
-    flex-direction: column; /* Untuk menumpuk teks dan tombol */
-    align-items: center; /* Memusatkan horizontal */
-    justify-content: center; /* Memusatkan vertikal */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .hero h1 {
@@ -190,7 +163,7 @@ nav ul li a.active::after {
 }
 
 /* --- Styling Umum untuk Bagian Halaman (Produk, About, Kontak) --- */
-.featured-products, .about-us, .contact-us {
+.featured-products, .about-us, .contact-us { /* Perbaiki class 'contact' ke 'contact-us' */
     padding: 60px 20px;
     background-color: white;
     text-align: center;
@@ -199,13 +172,12 @@ nav ul li a.active::after {
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
-/* Memastikan konten di dalam section-section ini juga terpusat */
-.about-us .container, .contact-us .container {
+.about-us .container, .contact-us .container { /* Perbaiki class 'contact' ke 'contact-us' */
     max-width: 900px;
     margin: 0 auto;
 }
 
-.featured-products h2, .about-us h2, .contact-us h2 {
+.featured-products h2, .about-us h2, .contact-us h2 { /* Perbaiki class 'contact' ke 'contact-us' */
     font-size: 2.5em;
     color: var(--heading-color);
     margin-bottom: 40px;
@@ -213,7 +185,7 @@ nav ul li a.active::after {
     display: inline-block;
 }
 
-.featured-products h2::after, .about-us h2::after, .contact-us h2::after {
+.featured-products h2::after, .about-us h2::after, .contact-us h2::after { /* Perbaiki class 'contact' ke 'contact-us' */
     content: '';
     display: block;
     width: 60%;
@@ -393,14 +365,14 @@ nav ul li a.active::after {
 }
 
 /* --- About Us & Contact Section --- */
-.about-us p, .contact-us p {
+.about-us p, .contact-us p { /* Perbaiki class 'contact' ke 'contact-us' */
     font-size: 1.1em;
     line-height: 1.8;
     max-width: 800px;
     margin: 0 auto 15px;
 }
 
-.contact-us p i {
+.contact-us p i { /* Perbaiki class 'contact' ke 'contact-us' */
     margin-right: 10px;
     color: var(--primary-color);
 }
@@ -550,7 +522,7 @@ footer {
     margin-top: 50px;
 }
 
-.sidebar-footer {
+.sidebar-footer { /* Perbaiki class dari 'cart-summary' ke 'sidebar-footer' */
     padding: 20px;
     border-top: 1px solid var(--border-color);
     text-align: right;
@@ -559,7 +531,7 @@ footer {
     gap: 15px;
 }
 
-.total-price {
+.total-price { /* Perbaiki class dari 'cart-total' ke 'total-price' */
     font-size: 1.6em;
     font-weight: bold;
     color: var(--heading-color);
@@ -810,7 +782,7 @@ footer {
     .featured-products h2 {
         font-size: 2.2em;
     }
-    .about-us h2, .contact-us h2, .sidebar-header h3, .popup-header h2 {
+    .about-us h2, .contact-us h2, .sidebar-header h3, .popup-header h2 { /* Perbaiki class 'contact' ke 'contact-us' */
         font-size: 1.8em;
     }
     .shopping-cart-sidebar {
@@ -840,8 +812,6 @@ footer {
         gap: 10px 20px;
         margin-top: 10px;
     }
-    /* .cart-icon { display: none; } - Tidak perlu karena sudah dihapus dari HTML */
-
     .hero {
         padding: 80px 15px;
         height: 400px;
