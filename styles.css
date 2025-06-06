@@ -5,7 +5,7 @@
     --secondary-color: #6c757d; /* Abu-abu untuk kategori/info */
     --text-color: #333;
     --heading-color: #222;
-    --light-bg: #f8f9fa;
+    --light-bg: #f8f9fa; /* Digunakan untuk background elemen konten */
     --border-color: #dee2e6;
     --accent-color: #ffc107; /* Kuning untuk aksen (misal: cart count) */
 }
@@ -21,7 +21,14 @@ body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     color: var(--text-color);
-    background-color: var(--light-bg);
+
+    /* Background baru Anda: Warna dasar + Pola bata */
+    background-color: #DFDBE5; /* Warna dasar abu-abu keunguan */
+    background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23007bff' fill-opacity='0.48'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: repeat; /* Penting agar pola berulang mengisi seluruh area */
+    background-attachment: fixed; /* Membuat background tidak bergerak saat scroll */
+    background-size: auto; /* Biarkan ukuran asli SVG pola */
+
     overflow-x: hidden; /* Mencegah scrollbar horizontal yang tidak diinginkan */
 }
 
@@ -49,7 +56,7 @@ img {
 
 /* --- Header Styling --- */
 header {
-    background-color: white;
+    background-color: white; /* Tetap putih agar menonjol dari background body */
     color: var(--text-color);
     padding: 15px 0;
     border-bottom: 1px solid var(--border-color);
@@ -117,12 +124,9 @@ nav ul li a.active::after {
     width: 100%;
 }
 
-/* Cart Icon - Styling ini sudah tidak relevan karena ikon dihapus dari HTML header */
-/* .cart-icon { display: none; } */
-/* .cart-icon .cart-item-count { display: none; } */
-
-/* --- Hero Section --- */
-.hero {
+/* --- Hero Section (contoh jika ada) --- */
+/* Jika Anda menambahkan hero section, pertimbangkan background terpisah untuknya */
+/* .hero {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://via.placeholder.com/1500x500?text=Background+Image') no-repeat center center/cover;
     color: white;
     text-align: center;
@@ -133,19 +137,8 @@ nav ul li a.active::after {
     align-items: center;
     justify-content: center;
 }
-
-.hero h1 {
-    font-size: 3.5em;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
-
-.hero p {
-    font-size: 1.5em;
-    margin-bottom: 30px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-}
-
+.hero h1 { font-size: 3.5em; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+.hero p { font-size: 1.5em; margin-bottom: 30px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
 .btn-hero {
     background-color: var(--primary-color);
     color: white;
@@ -156,28 +149,26 @@ nav ul li a.active::after {
     transition: background-color 0.3s ease, transform 0.2s ease;
     display: inline-block;
 }
-
-.btn-hero:hover {
-    background-color: var(--dark-primary-color);
-    transform: translateY(-3px);
-}
+.btn-hero:hover { background-color: var(--dark-primary-color); transform: translateY(-3px); } */
 
 /* --- Styling Umum untuk Bagian Halaman (Produk, About, Kontak) --- */
-.featured-products, .about-us, .contact-us { /* Perbaiki class 'contact' ke 'contact-us' */
+.featured-products, .about-us, .contact-us {
     padding: 60px 20px;
-    background-color: white;
+    background-color: white; /* Tetap putih agar kontras dengan background body */
     text-align: center;
     margin-top: 30px;
     border-radius: 12px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: relative; /* Penting untuk z-index */
+    z-index: 1; /* Memastikan section ini di atas background body */
 }
 
-.about-us .container, .contact-us .container { /* Perbaiki class 'contact' ke 'contact-us' */
+.about-us .container, .contact-us .container {
     max-width: 900px;
     margin: 0 auto;
 }
 
-.featured-products h2, .about-us h2, .contact-us h2 { /* Perbaiki class 'contact' ke 'contact-us' */
+.featured-products h2, .about-us h2, .contact-us h2 {
     font-size: 2.5em;
     color: var(--heading-color);
     margin-bottom: 40px;
@@ -185,7 +176,7 @@ nav ul li a.active::after {
     display: inline-block;
 }
 
-.featured-products h2::after, .about-us h2::after, .contact-us h2::after { /* Perbaiki class 'contact' ke 'contact-us' */
+.featured-products h2::after, .about-us h2::after, .contact-us h2::after {
     content: '';
     display: block;
     width: 60%;
@@ -365,14 +356,14 @@ nav ul li a.active::after {
 }
 
 /* --- About Us & Contact Section --- */
-.about-us p, .contact-us p { /* Perbaiki class 'contact' ke 'contact-us' */
+.about-us p, .contact-us p {
     font-size: 1.1em;
     line-height: 1.8;
     max-width: 800px;
     margin: 0 auto 15px;
 }
 
-.contact-us p i { /* Perbaiki class 'contact' ke 'contact-us' */
+.contact-us p i {
     margin-right: 10px;
     color: var(--primary-color);
 }
@@ -406,6 +397,8 @@ footer {
     text-align: center;
     padding: 20px 0;
     margin-top: 50px;
+    position: relative; /* Penting untuk z-index */
+    z-index: 1; /* Memastikan footer di atas background body */
 }
 
 /* --- Shopping Cart Sidebar --- */
@@ -415,7 +408,7 @@ footer {
     right: -350px; /* Default: tersembunyi di luar layar */
     width: 350px;
     height: 100%;
-    background-color: white;
+    background-color: white; /* Pertahankan putih */
     box-shadow: -4px 0 15px rgba(0, 0, 0, 0.15);
     transition: right 0.3s ease-in-out;
     z-index: 1001;
@@ -522,7 +515,7 @@ footer {
     margin-top: 50px;
 }
 
-.sidebar-footer { /* Perbaiki class dari 'cart-summary' ke 'sidebar-footer' */
+.sidebar-footer {
     padding: 20px;
     border-top: 1px solid var(--border-color);
     text-align: right;
@@ -531,7 +524,7 @@ footer {
     gap: 15px;
 }
 
-.total-price { /* Perbaiki class dari 'cart-total' ke 'total-price' */
+.total-price {
     font-size: 1.6em;
     font-weight: bold;
     color: var(--heading-color);
@@ -587,7 +580,7 @@ footer {
 }
 
 .popup-content {
-    background-color: white;
+    background-color: white; /* Pertahankan putih */
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
@@ -598,6 +591,7 @@ footer {
     position: relative;
     max-height: 90vh;
     overflow-y: auto;
+    z-index: 2001; /* Pastikan di atas overlay */
 }
 
 .popup-overlay.open .popup-content {
@@ -773,16 +767,12 @@ footer {
     nav ul li a {
         font-size: 1em;
     }
-    .hero h1 {
-        font-size: 2.8em;
-    }
-    .hero p {
-        font-size: 1.3em;
-    }
+    /* .hero h1 { font-size: 2.8em; } */
+    /* .hero p { font-size: 1.3em; } */
     .featured-products h2 {
         font-size: 2.2em;
     }
-    .about-us h2, .contact-us h2, .sidebar-header h3, .popup-header h2 { /* Perbaiki class 'contact' ke 'contact-us' */
+    .about-us h2, .contact-us h2, .sidebar-header h3, .popup-header h2 {
         font-size: 1.8em;
     }
     .shopping-cart-sidebar {
@@ -812,16 +802,9 @@ footer {
         gap: 10px 20px;
         margin-top: 10px;
     }
-    .hero {
-        padding: 80px 15px;
-        height: 400px;
-    }
-    .hero h1 {
-        font-size: 2.2em;
-    }
-    .hero p {
-        font-size: 1.1em;
-    }
+    /* .hero { padding: 80px 15px; height: 400px; } */
+    /* .hero h1 { font-size: 2.2em; } */
+    /* .hero p { font-size: 1.1em; } */
     .featured-products {
         padding: 40px 15px;
     }
@@ -849,7 +832,7 @@ footer {
     }
     .shopping-cart-sidebar {
         width: 100%;
-        max-width: 350px;
+        max-width: 350px; /* Batas max-width untuk tampilan mobile */
     }
     .popup-content {
         padding: 20px;
@@ -866,21 +849,14 @@ footer {
     nav ul li {
         margin-left: 15px;
     }
-    .hero h1 {
-        font-size: 1.8em;
-    }
-    .hero p {
-        font-size: 1em;
-    }
-    .btn-hero {
-        padding: 12px 25px;
-        font-size: 1em;
-    }
+    /* .hero h1 { font-size: 1.8em; } */
+    /* .hero p { font-size: 1em; } */
+    /* .btn-hero { padding: 12px 25px; font-size: 1em; } */
     .featured-products h2 {
         font-size: 1.6em;
     }
     .product-list {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Satu kolom untuk tampilan sangat kecil */
         padding: 0 10px;
     }
     .product-card {
@@ -888,7 +864,7 @@ footer {
     }
     .shopping-cart-sidebar {
         width: 100%;
-        max-width: none;
+        max-width: none; /* Izinkan sidebar mengambil 100% lebar layar sangat kecil */
     }
     .popup-content {
         padding: 15px;
