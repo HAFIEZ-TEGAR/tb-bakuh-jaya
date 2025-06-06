@@ -62,7 +62,7 @@ header {
 
 header .container {
     display: flex;
-    justify-content: space-between; /* Menyebar elemen logo, nav, dan cart */
+    justify-content: space-between; /* Menyebar elemen logo dan nav */
     align-items: center; /* Menyelaraskan secara vertikal di tengah */
 }
 
@@ -118,13 +118,13 @@ nav ul li a.active::after {
     width: 100%;
 }
 
-/* Cart Icon */
+/* Cart Icon - styling ini dihapus karena ikon tidak ada di header lagi
 .cart-icon {
     position: relative;
     cursor: pointer;
     font-size: 1.8em;
     color: var(--primary-color);
-    margin-left: 20px; /* Memberi sedikit ruang dari nav */
+    margin-left: 20px;
 }
 
 .cart-icon .cart-item-count {
@@ -145,6 +145,7 @@ nav ul li a.active::after {
 .cart-icon:hover .cart-item-count {
     transform: scale(1.1);
 }
+*/
 
 /* --- Hero Section --- */
 .hero {
@@ -189,9 +190,9 @@ nav ul li a.active::after {
 }
 
 /* --- Styling Umum untuk Bagian Halaman (Produk, About, Kontak) --- */
-.featured-products, .about-us, .contact {
+.featured-products, .about-us, .contact-us {
     padding: 60px 20px;
-    background-color: white; /* Mengatur latar belakang menjadi putih */
+    background-color: white;
     text-align: center;
     margin-top: 30px;
     border-radius: 12px;
@@ -199,20 +200,20 @@ nav ul li a.active::after {
 }
 
 /* Memastikan konten di dalam section-section ini juga terpusat */
-.about-us .container, .contact .container {
-    max-width: 900px; /* Kontainer yang lebih kecil untuk teks about/contact */
+.about-us .container, .contact-us .container {
+    max-width: 900px;
     margin: 0 auto;
 }
 
-.featured-products h2, .about-us h2, .contact h2 {
+.featured-products h2, .about-us h2, .contact-us h2 {
     font-size: 2.5em;
     color: var(--heading-color);
     margin-bottom: 40px;
     position: relative;
-    display: inline-block; /* Agar `::after` tetap terpusat di bawah teks */
+    display: inline-block;
 }
 
-.featured-products h2::after, .about-us h2::after, .contact h2::after {
+.featured-products h2::after, .about-us h2::after, .contact-us h2::after {
     content: '';
     display: block;
     width: 60%;
@@ -225,16 +226,16 @@ nav ul li a.active::after {
 /* --- Search Bar Styling --- */
 .search-bar {
     display: flex;
-    justify-content: center; /* Memusatkan input dan tombol pencarian */
+    justify-content: center;
     margin-bottom: 40px;
     gap: 10px;
-    max-width: 600px; /* Batasi lebar search bar */
+    max-width: 600px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .search-bar input[type="text"] {
-    flex-grow: 1; /* Agar input mengisi ruang yang tersedia */
+    flex-grow: 1;
     padding: 12px 20px;
     border: 1px solid #ccc;
     border-radius: 25px;
@@ -265,11 +266,10 @@ nav ul li a.active::after {
 /* --- Product List (Grid Layout) --- */
 .product-list {
     display: grid;
-    /* Grid dengan kolom adaptif, min 280px */
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
-    max-width: 1200px; /* Batasi lebar grid produk */
-    margin: 0 auto; /* Memusatkan grid secara horizontal */
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px 0;
 }
 
@@ -284,7 +284,7 @@ nav ul li a.active::after {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Konten tersebar dari atas ke bawah */
+    justify-content: space-between;
 }
 
 .product-card:hover {
@@ -313,13 +313,11 @@ nav ul li a.active::after {
     display: block;
 }
 
-/* Style untuk ikon placeholder jika gambar gagal/tidak ada */
 .product-image i.fas {
     font-size: 60px;
     color: #bdbdbd;
 }
 
-/* Style jika gambar diganti oleh placeholder */
 .product-image img.placeholder-img {
     filter: grayscale(100%);
     opacity: 0.7;
@@ -395,14 +393,14 @@ nav ul li a.active::after {
 }
 
 /* --- About Us & Contact Section --- */
-.about-us p, .contact p {
+.about-us p, .contact-us p {
     font-size: 1.1em;
     line-height: 1.8;
-    max-width: 800px; /* Batasi lebar paragraf untuk keterbacaan */
-    margin: 0 auto 15px; /* Memusatkan paragraf */
+    max-width: 800px;
+    margin: 0 auto 15px;
 }
 
-.contact p i {
+.contact-us p i {
     margin-right: 10px;
     color: var(--primary-color);
 }
@@ -442,7 +440,7 @@ footer {
 .shopping-cart-sidebar {
     position: fixed;
     top: 0;
-    right: -350px;
+    right: -350px; /* Default: tersembunyi di luar layar */
     width: 350px;
     height: 100%;
     background-color: white;
@@ -454,7 +452,7 @@ footer {
 }
 
 .shopping-cart-sidebar.open {
-    right: 0;
+    right: 0; /* Terbuka: geser ke dalam */
 }
 
 .sidebar-header {
@@ -487,7 +485,7 @@ footer {
 .cart-items {
     flex-grow: 1;
     padding: 20px;
-    overflow-y: auto; /* Memungkinkan scroll jika item banyak */
+    overflow-y: auto;
 }
 
 .cart-item {
@@ -497,12 +495,12 @@ footer {
     padding: 10px 0;
     border-bottom: 1px dashed #eee;
     font-size: 1.05em;
-    flex-wrap: wrap; /* Agar item bisa wrap di mobile */
-    gap: 5px; /* Spasi antar elemen dalam item */
+    flex-wrap: wrap;
+    gap: 5px;
 }
 
 .cart-item span:first-child {
-    flex-basis: 60%; /* Beri ruang lebih untuk nama produk */
+    flex-basis: 60%;
     text-align: left;
 }
 
@@ -514,8 +512,8 @@ footer {
     display: flex;
     align-items: center;
     gap: 8px;
-    flex-basis: 35%; /* Beri ruang untuk kontrol */
-    justify-content: flex-end; /* Dorong ke kanan */
+    flex-basis: 35%;
+    justify-content: flex-end;
 }
 
 .cart-item-controls button {
@@ -586,6 +584,14 @@ footer {
     transform: translateY(-2px);
 }
 
+.whatsapp-button {
+    background-color: #25D366;
+}
+
+.whatsapp-button:hover {
+    background-color: #1DA851;
+}
+
 /* --- Checkout Popup Styling --- */
 .popup-overlay {
     position: fixed;
@@ -595,8 +601,8 @@ footer {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
     display: flex;
-    justify-content: center; /* Memusatkan pop-up horizontal */
-    align-items: center; /* Memusatkan pop-up vertikal */
+    justify-content: center;
+    align-items: center;
     z-index: 2000;
     opacity: 0;
     visibility: hidden;
@@ -614,12 +620,12 @@ footer {
     border-radius: 12px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
     width: 90%;
-    max-width: 500px; /* Batasi lebar pop-up */
+    max-width: 500px;
     transform: scale(0.9);
     transition: transform 0.3s ease;
     position: relative;
-    max-height: 90vh; /* Batasi tinggi pop-up agar tidak meluap */
-    overflow-y: auto; /* Memungkinkan scroll jika konten pop-up terlalu panjang */
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .popup-overlay.open .popup-content {
@@ -742,10 +748,10 @@ footer {
 }
 
 .popup-cart-items {
-    max-height: 150px; /* Batasi tinggi ringkasan item */
-    overflow-y: auto; /* Aktifkan scroll jika item banyak */
+    max-height: 150px;
+    overflow-y: auto;
     margin-bottom: 15px;
-    padding-right: 5px; /* Sedikit padding untuk scrollbar */
+    padding-right: 5px;
 }
 
 .popup-cart-item {
@@ -804,7 +810,7 @@ footer {
     .featured-products h2 {
         font-size: 2.2em;
     }
-    .about-us h2, .contact h2, .sidebar-header h3, .popup-header h2 {
+    .about-us h2, .contact-us h2, .sidebar-header h3, .popup-header h2 {
         font-size: 1.8em;
     }
     .shopping-cart-sidebar {
@@ -832,8 +838,10 @@ footer {
         flex-wrap: wrap;
         justify-content: center;
         gap: 10px 20px;
-        margin-top: 10px; /* Sedikit ruang setelah logo saat wrap */
+        margin-top: 10px;
     }
+    /* .cart-icon { display: none; } - Tidak perlu karena sudah dihapus dari HTML */
+
     .hero {
         padding: 80px 15px;
         height: 400px;
@@ -871,7 +879,7 @@ footer {
     }
     .shopping-cart-sidebar {
         width: 100%;
-        max-width: 350px; /* Tetap batasi lebar sidebar pada layar yang lebih kecil */
+        max-width: 350px;
     }
     .popup-content {
         padding: 20px;
@@ -902,16 +910,15 @@ footer {
         font-size: 1.6em;
     }
     .product-list {
-        grid-template-columns: 1fr; /* Satu kolom untuk tampilan sangat kecil */
+        grid-template-columns: 1fr;
         padding: 0 10px;
     }
     .product-card {
         margin-bottom: 15px;
     }
-    /* Search bar sudah diatur untuk flex-direction column di 768px */
     .shopping-cart-sidebar {
-        width: 100%; /* Sidebar bisa full width pada layar sangat kecil */
-        max-width: none; /* Hilangkan max-width untuk full width */
+        width: 100%;
+        max-width: none;
     }
     .popup-content {
         padding: 15px;
