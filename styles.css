@@ -405,7 +405,7 @@ footer {
 .shopping-cart-sidebar {
     position: fixed;
     top: 0;
-    right: -350px; /* Default: tersembunyi di luar layar */
+    right: -340px; /* Default: tersembunyi di luar layar */
     width: 350px;
     height: 100%;
     background-color: white; /* Pertahankan putih */
