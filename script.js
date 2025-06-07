@@ -1,7 +1,7 @@
 // script.js
 // --- Konfigurasi Awal ---
 // >>> PENTING: GANTI URL DI BAWAH INI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA <<<
-const PRODUCTS_API_URL = 'https://script.google.com/macros/s/AKfycbzlgtrnZHoWyDP7GoZpZZrbwFF0mF3fS0DKxgMSrHIQ0qJGZv-xT1YMpfaKWl8hiUHysQ/exec'; // URL ini adalah contoh, pastikan Anda menggantinya
+const PRODUCTS_API_URL = 'https://script.google.com/macros/s/AKfycbwypZRDoZSnNUnCoDHlkpkiXf9pIEgVnx0W-4oIHYzHByO4h9ZZ8f7avwRPlxpI7HZwrw/exec'; // URL ini adalah contoh, pastikan Anda menggantinya
 // <<< JANGAN LUPA GANTI! >>>
 
 let cart;
