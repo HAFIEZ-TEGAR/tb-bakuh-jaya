@@ -96,7 +96,7 @@ function renderProducts(productsToRender) {
         const productName = product['Product Name'];
         const price = parseFloat(product['Price']);
         const category = product['Satuan Unit'] || 'Umum';
-        const imageUrl = product['Image URL'] || '';
+        const imageUrl = product['Image Link'] || '';
         const stock = product['Stock'];
         const description = product['Description'] || '';
         const tampil = product['Tampil'];
