@@ -38,7 +38,7 @@ const productListContainer = document.querySelector('.product-list');
 const searchInput = document.getElementById('searchInput');
 const searchButton = document.getElementById('searchButton');
 const loadingMessage = document.getElementById('loading-products');
-// const cartIcon = document.getElementById('cart-icon'); // HAPUS INI
+const cartIcon = document.getElementById('cart-icon'); 
 
 let allProducts = [];
 
@@ -324,7 +324,9 @@ if (checkoutForm) {
 // --- Inisialisasi Saat Halaman Dimuat ---
 document.addEventListener('DOMContentLoaded', () => {
     // Event listener untuk tombol dan elemen keranjang lainnya
-    // cartIcon.addEventListener('click', showCart); // HAPUS INI
+    if (cartIcon) { // Cek apakah elemen ada sebelum menambahkan listener
+    cartIcon.addEventListener('click', showCart);
+}
     if (closeSidebarBtn) {
         closeSidebarBtn.addEventListener('click', hideCart);
     }
