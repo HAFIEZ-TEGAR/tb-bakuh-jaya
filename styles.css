@@ -123,7 +123,71 @@ nav ul li a:hover::after,
 nav ul li a.active::after {
     width: 100%;
 }
+/* Tambahkan ini di bagian Header Styling */
+nav {
+    display: flex; /* Agar ikon keranjang bisa sejajar dengan ul */
+    align-items: center;
+}
 
+nav ul {
+    /* Tetap flex untuk desktop */
+    list-style: none;
+    display: flex;
+}
+
+/* Styling untuk ikon navigasi (keranjang/hamburger) */
+.nav-icons {
+    display: none; /* Sembunyikan secara default untuk desktop */
+    margin-left: 20px; /* Jarak dari menu navigasi */
+}
+
+#cart-icon {
+    font-size: 1.5em; /* Ukuran ikon keranjang */
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+
+#cart-icon:hover {
+    color: var(--primary-color);
+}
+
+/* Media Queries untuk Ponsel */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: row; /* Kembali ke row agar logo dan ikon sejajar */
+        justify-content: space-between; /* Untuk mendorong ikon ke kanan */
+        align-items: center;
+        gap: 0; /* Hapus gap yang mungkin mengganggu */
+    }
+
+    .logo h1 {
+        font-size: 1.5em; /* Sesuaikan ukuran font logo */
+        white-space: normal; /* Izinkan teks memisah baris jika terlalu panjang */
+        text-align: left;
+    }
+
+    nav ul {
+        display: none; /* Sembunyikan menu teks di layar kecil */
+    }
+
+    .nav-icons {
+        display: flex; /* Tampilkan ikon keranjang di layar kecil */
+        gap: 15px; /* Jarak antar ikon jika ada lebih dari satu */
+    }
+    /* Sesuaikan ukuran font icon keranjang jika perlu */
+    #cart-icon {
+        font-size: 1.8em; /* Ukuran yang lebih besar untuk ikon di ponsel */
+    }
+}
+
+@media (max-width: 480px) {
+    .logo h1 {
+        font-size: 1.2em; /* Lebih kecil lagi untuk layar sangat kecil */
+    }
+    #cart-icon {
+        font-size: 1.6em;
+    }
+}
 /* --- Hero Section (contoh jika ada) --- */
 /* Jika Anda menambahkan hero section, pertimbangkan background terpisah untuknya */
 /* .hero {
