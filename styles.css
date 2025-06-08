@@ -7,7 +7,7 @@
     --heading-color: #222;
     --light-bg: #f8f9fa; /* Digunakan untuk background elemen konten */
     --border-color: #dee2e6;
-    --accent-color: #ffc107; /* Kuning untuk aksen (misal: cart count) */
+    --accent-color: #ffc107; /* fKuning untuk aksen (misal: cart count) */
 }
 
 /* --- Reset & Base Styling --- */
@@ -157,12 +157,14 @@ nav ul {
         flex-direction: row; /* Kembali ke row agar logo dan ikon sejajar */
         justify-content: space-between; /* Untuk mendorong ikon ke kanan */
         align-items: center;
+        padding: 0 15px;
         gap: 0; /* Hapus gap yang mungkin mengganggu */
     }
 
     .logo h1 {
-        font-size: 1.5em; /* Sesuaikan ukuran font logo */
+        font-size: 1.3em; /* Sesuaikan ukuran font logo */
         white-space: normal; /* Izinkan teks memisah baris jika terlalu panjang */
+        line-height: 1.2;
         text-align: left;
     }
 
@@ -469,7 +471,7 @@ footer {
 .shopping-cart-sidebar {
     position: fixed;
     top: 0;
-    right: -330px; /* Default: tersembunyi di luar layar */
+    right: -100vw; /* Default: tersembunyi di luar layar */
     width: 350px;
     height: 100%;
     background-color: white; /* Pertahankan putih */
@@ -821,7 +823,7 @@ footer {
 }
 
 /* --- Media Queries (Responsivitas) --- */
-@media (max-width: 992px) {
+@media (max-width: 768px) {
     .logo h1 {
         font-size: 1.5em;
     }
